@@ -118,10 +118,10 @@ public class Board extends TilePane {
 //        String pm = priorMoves.stream().reduce("", (a, b) -> a+","+b, String::concat);
 //System.out.println("pm = "+pm);
 //        RestClient rc = RestClient.create().method("GET").host("http://t2.lodgon.com/tictactoe")
-       RestClient rc = RestClient.create().method("GET").host("http://localhost:8080")
+       RestClient rc = RestClient.create().method("GET").host("http://localhost:8090")
                 .path("player").queryParam("gameBoard", gameBoard.toString())
-                .queryParam("strategy", "default");
-                //.queryParam("priorMoves", pm);
+                .queryParam("strategy", "neuralNetwork");
+                //.queryParam("strategy", "default");
         GluonObservableObject<PlayerResponse> retrieved = DataProvider.retrieveObject(rc.createObjectDataReader(PlayerResponse.class));
         retrieved.stateProperty().addListener((Observable o) -> {
             if (retrieved.getState() == ConnectState.SUCCEEDED && !gameFinished) {
