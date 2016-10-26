@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.0.9'
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
+    }
+}
+
+ext.charm_version = '3.0.0'
+
+apply plugin: 'org.javafxports.jfxmobile'
+mainClassName = 'com.gluonhq.demos.tictactoe.TicTacToe'
+dependencies {
+    compile "com.gluonhq:charm:$charm_version"
+
+    androidRuntime "com.gluonhq:charm-android:$charm_version"
+    iosRuntime     "com.gluonhq:charm-ios:$charm_version"
+    desktopRuntime "com.gluonhq:charm-desktop:$charm_version"
+}
+
+jfxmobile {
+    android {
+        manifest = 'src/android/AndroidManifest.xml'
+    }
+    ios {
+        infoPList = file('src/ios/Default-Info.plist')
+        forceLinkClasses = [
+                'com.gluonhq.**.*',
+                'io.datafx.**.*',
+                'javax.annotations.**.*',
+                'javax.inject.**.*',
+                'javax.json.**.*',
+                'org.glassfish.json.**.*'
+        ]
+    }
+}
